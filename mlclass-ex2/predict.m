@@ -16,7 +16,11 @@ p = zeros(m, 1);
 %
 
 
+pm = X * theta;
 
+indexs = find(pm>=0);
+
+p(indexs) = 1;
 
 
 
