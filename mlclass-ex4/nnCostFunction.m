@@ -98,12 +98,11 @@ J = J + lambda/(2*m) * (sum(sum(Theta1_r.^2))+sum(sum(Theta2_r.^2)));
 % Part 2
 D1 = zeros(size(Theta1_grad));
 D2 = zeros(size(Theta2_grad));
-for j = 1:m
-  delta_3 = h(:,j) - y(:,j);
-  delta_2 = (Theta2' * delta_3) .* sigmoidGradient([1;z2(:,j)]);
-  D1 = D1 + delta_2(2:end) * X(:, j)';
-  D2 = D2 + delta_3(:) * a2(:, j)';
-end
+
+delta_3 = h - y;
+delta_2 = (Theta2' * delta_3) .* sigmoidGradient([ones(1, m);z2]);
+D1 = delta_2(2:end, :) * X';
+D2 = delta_3 * a2';
 
 Theta1_grad = 1/m * D1;
 Theta2_grad = 1/m * D2;
