@@ -79,7 +79,7 @@ h = sigmoid(z3);
 temp = zeros(num_labels, m);
 
 for i = 1:m
-  temp(y(i), i) = 1
+  temp(y(i), i) = 1;
 end
 
 y = temp;
@@ -89,9 +89,9 @@ J = 1/m * sum(sum(-y.*log(h)-(1-y).*log(1-h)));
 
 % Part 3
 
-Theta1 = Theta1(:, 2:end);
+Theta1_r = Theta1(:, 2:end);
 Theta2_r = Theta2(:, 2:end);
-J = J + lambda/(2*m) * (sum(sum(Theta1.^2))+sum(sum(Theta2_r.^2)));
+J = J + lambda/(2*m) * (sum(sum(Theta1_r.^2))+sum(sum(Theta2_r.^2)));
 
 
 
@@ -105,9 +105,11 @@ for j = 1:m
   D2 = D2 + delta_3(:) * a2(:, j)';
 end
 
-Theta1_grad = D1;
-Theta2_grad = D2;
+Theta1_grad = 1/m * D1;
+Theta2_grad = 1/m * D2;
 
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + lambda/m * Theta1(:,2:end);
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + lambda/m * Theta2(:,2:end);
 
 
 % -------------------------------------------------------------
